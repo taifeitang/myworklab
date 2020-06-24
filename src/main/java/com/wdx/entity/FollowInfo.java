@@ -30,7 +30,7 @@ public class FollowInfo implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "关注信息id")
-    @TableId(value = "follow_info_id", type = IdType.ID_WORKER)
+    @TableId(value = "follow_info_id", type = IdType.INPUT)
     private String followInfoId;
 
     @ApiModelProperty(value = "医院信息id")

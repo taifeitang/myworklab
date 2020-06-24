@@ -29,7 +29,7 @@ public class HospitalOrderPaymentFlow implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @ApiModelProperty(value = "订单支付流水id")
-    @TableId(value = "order_Payment_flow_id", type = IdType.ID_WORKER)
+    @TableId(value = "order_Payment_flow_id", type = IdType.INPUT)
     private String orderPaymentFlowId;
 
     @ApiModelProperty(value = "订单id")
