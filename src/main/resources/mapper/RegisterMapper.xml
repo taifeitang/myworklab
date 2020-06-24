@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdx.mapper.RegisterMapper">
+    <resultMap id="submitInfo" type="com.wdx.entity.SubmitInfo">
+        <result property="userId" column="user_id"/>
+        <result property="healthcardHosId" column="healthcard_hos_id"/>
+        <result property="healthCardId" column="health_card_id"/>
+        <result property="orderId" column="order_id"/>
+        <result property="HospitalInfoId" column="Hospital_info_id"/>
+    </resultMap>
+    <select id="getSubmitInfo" resultMap="submitInfo">
+        select a.user_id,b.healthcard_hos_id,c.health_card_id,d.order_id,e.Hospital_info_id
+        from
+            ylbk_User_info a,
+            ylbk_healthcard_hos_sbuc b,
+            ylbk_healthcard_info c,
+            ylbk_hospital_order_info d,
+            ylbk_Hospital_info e
+        where
+            a.user_id = c.user_id and
+            a.user_id = d.UserId and
+            a.user_id = #{userId} and
+            b.health_card_id = c.health_card_id and
+            e.Hospital_info_id = b.Hospital_info_id and
+            b.PatientId =#{patientId}
+    </select>
+    <update id="updateSubmitFall">
+        UPDATE ylbk_hospital_registration_info
+        set
+            regist_result = 0,
+            edit_time = now()
+        where regist_id =#{registId}
+    </update>
+
+    <update id="updateSubmit">
+        UPDATE ylbk_hospital_registration_info
+         set
+             RegisterNo = #{RegisterNo},
+             JZNo =#{JZNo},
+             regist_result = 1,
+             edit_time = now()
+        where regist_id =#{registId}
+    </update>
+    <select id="isReAdd" resultType="java.lang.String">
+        select regist_id as registerId from ylbk_hospital_registration_info where order_id = #{orderId}
+    </select>
+    <insert id="addSubmitInfo" >
+        INSERT INTO ylbk_hospital_registration_info
+              (regist_id,
+               health_card_id,
+               healthcard_hos_sbuc_id,
+               UserId,
+               order_id,
+               Hospital_info_id,
+               OrderNo,
+               OrderNum,
+               AsRowid,
+               regist_time,
+               visit_time,
+              insert_time)
+        values(#{submitInfo.registId},
+               #{submitInfo.healthCardId},
+               #{submitInfo.healthcardHosId},
+               #{submitInfo.userId},
+               #{submitInfo.orderId},
+               #{submitInfo.HospitalInfoId},
+               #{orderNo},
+               #{hisOrderNum},
+               #{hisAsRowid},
+                now(),
+               #{VisitTime},
+                now())
+    </insert>
+
+    <update id="lockPayment">
+        update ylbk_hospital_payment_flow a set a.payment_result='4' where  a.Payment_flow_id=#{paymentFlowId} and a.payment_result='3'
+    </update>
+</mapper>
