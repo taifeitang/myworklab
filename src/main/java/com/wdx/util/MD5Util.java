@@ -36,6 +36,7 @@ public class MD5Util {
                 byte[] source = originstr.getBytes(encoding);
                 md.update(source);
                 byte[] tmp = md.digest();
+                System.out.println("Tmp的长度"+tmp.length);
                 char[] str = new char[32];
                 for (int i = 0, j = 0; i < 16; i++) {
                     byte b = tmp[i];
@@ -62,6 +63,7 @@ public class MD5Util {
         //加密数据
         String md5Key = ecodeByMD5(content, charset_UTF8);
         System.out.println("ecodeByMD5-run: "+ md5Key);
+        System.out.println("ecodeByMD5-run: "+ md5Key.length());
 
     }
 }
