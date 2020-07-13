@@ -2,10 +2,19 @@ package com.wdx;
 
 
 import com.alibaba.fastjson.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.Wrapper;
+import com.wdx.entity.Board;
+import com.wdx.entity.Stock;
+import com.wdx.mapper.BoardCopyMapper;
+import com.wdx.mapper.BoardMapper;
+import com.wdx.mapper.StockCopyMapper;
+import com.wdx.mapper.StockMapper;
 import net.sf.json.JSON;
+import org.apache.ibatis.annotations.Param;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.annotation.Resource;
 import java.math.BigDecimal;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -146,6 +155,31 @@ class MyworklabApplicationTests {
         System.out.println(j.get("4")==null);//false
         System.out.println(j.get("4").equals("null"));//true
         System.out.println("null".equals(j.get("4")));//false
+    }
+    @Resource
+    StockMapper stockMapper;
+    @Resource
+    StockCopyMapper stockCopyMapper;
+    @Resource
+    BoardMapper boardMapper;
+    @Resource
+    BoardCopyMapper boardCopyMapper;
+    @Test
+    void Test1(){
+        Stock stock = stockMapper.selectById(1);
+        if(stock!=null){
+            System.out.println(stock.toString());
+        }
+        List<Stock> list=stockMapper.getList();
+        for (int i = 0; i < list.size(); i++) {
+            System.out.println(list.get(i).toString());
+        }
+        List<Board> l=boardMapper.selectAsList();
+        for (Board b:l) {
+            System.out.println(l.toString());
+        }
+        boardMapper.insertList( l);
+
     }
 
 }
