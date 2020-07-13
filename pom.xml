@@ -117,6 +117,22 @@
             <artifactId>jsoup</artifactId>
             <version>1.7.3</version>
         </dependency>
+       <!--引入第三方jar包，自己创建lib的方式开始-->
+        <dependency>
+            <groupId>com.smartjsp</groupId>
+            <artifactId>upload</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${project.basedir}/lib/xcgl_jspsmartupload.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>jdbc</artifactId>
+            <scope>system</scope>
+            <version>1.0</version>
+            <systemPath>${project.basedir}/lib/ojdbc6.jar</systemPath>
+        </dependency>
+        <!--引入第三方jar包，自己创建lib的方式结束-->
     </dependencies>
 
     <build>
