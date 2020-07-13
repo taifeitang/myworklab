@@ -1,7 +1,9 @@
 package com.wdx.util;
 
 
+
 import net.sf.json.JSONObject;
+import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
@@ -33,7 +35,7 @@ public class CommUtil {
         JSONObject result = new JSONObject();
         try{
             JSONObject one_obj = new JSONObject();
-            one_obj.put("data",EncrypAES.encryptCBC(json.toString(),sKey,iv));
+            one_obj.put("data", EncrypAES.encryptCBC(json.toString(),sKey,iv));
             one_obj.put("appid","213330428");
             one_obj.put("iv","bURwd0AwZUM1ciVvXkR6Mw==");
             String   result_str = post(one_obj,get_url);

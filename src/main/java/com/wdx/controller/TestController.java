@@ -27,7 +27,7 @@ public class TestController {
         reqObj.put("PatientId","8779204");//11230607 8779204
         System.out.println(reqObj);
         //JSONObject result=CommUtil.get_post_josn(reqObj,"outpatient/getNoPayList");
-        JSONObject result=CommUtil.get_post_josn(reqObj,"hospital_prepay/listPreVisit");
+        JSONObject result= CommUtil.get_post_josn(reqObj,"hospital_prepay/listPreVisit");
 
         return  result;
     }
