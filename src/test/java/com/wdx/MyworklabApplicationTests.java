@@ -9,6 +9,8 @@ import com.wdx.mapper.BoardCopyMapper;
 import com.wdx.mapper.BoardMapper;
 import com.wdx.mapper.StockCopyMapper;
 import com.wdx.mapper.StockMapper;
+import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 import net.sf.json.JSON;
 import org.apache.ibatis.annotations.Param;
 import org.junit.jupiter.api.Test;
@@ -21,8 +23,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-
+@Data
 @SpringBootTest
+@Slf4j
 class MyworklabApplicationTests {
 //    @Autowired
 //    private UserMapper userMapper;
@@ -179,7 +182,42 @@ class MyworklabApplicationTests {
             System.out.println(l.toString());
         }
         boardMapper.insertList( l);
-
+        boardMapper.updateBoard(Board.builder().boardName("上海").build());
+        //new Board(1,"上海市场",null);
     }
+
+    @Test
+    void Test2(){
+       // boardMapper.updateBoardCopy(new Board());
+        //boardMapper.getBoard("上海市场","上海");
+        boardMapper.getBoard(null,"上海");
+        boardMapper.getBoard2("上海市场",null,"1");
+        Board board = Board.builder().boardName("上海市场").address("上海").build();
+        System.out.println(boardMapper.getBoard2(board).toString());
+    }
+    @Test
+    void Test3(){
+        Board board = Board.builder().boardName("欧洲市场").address("英国").id(9).version("3").build();
+        int i=boardMapper.updateCopy2(board);
+        log.info("更新了："+i);
+    }
+    @Test
+    void Test4(){
+        List<Board>list=boardMapper.selectAsList();
+        int i=boardMapper.insertBoardCopy(list);
+        log.info("插入了："+i);
+    }
+    @Test
+    void Test5(){
+        List<Integer> integers = boardMapper.selectAllId();
+        boardMapper.selectIn(integers);
+    }
+    @Test
+    void Test6(){
+            int i=boardMapper.insertBySelect();
+            //log.debug("把查询结果插入表"+i);
+            log.info("把查询结果插入表:"+i);
+        }
+
 
 }

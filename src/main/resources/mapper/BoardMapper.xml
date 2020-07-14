@@ -11,6 +11,101 @@
             #{l.boardName}, #{l.address}
             )
         </foreach>
-
     </insert>
+    <update id="updateBoard" >
+        update board t set t.board_name=#{boardName}
+        <if test="address!=null">
+            ,address=#{address}
+        </if>
+    where t.id=3;
+    </update>
+<update id="updateBoardCopy">
+    update board_copy t set
+    <if test="boardName!=null and address!=null">
+        t.board_name=#{boardName}
+    </if>
+    where t.id=3
+</update>
+
+    <select id="getBoard" resultType="BoardCopy">
+        select * from board_copy t
+         <where>
+          <if test="boardName!=null"> and board_name=#{boardName} </if>
+          <if test="address!=null">and address=#{address}</if>
+        </where>
+    </select>
+    <!--对比getBoard方法-->
+    <select id="getBoard2" resultType="BoardCopy">
+           select * from board_copy
+        <trim prefix="where" prefixOverrides="and|or">
+            <if test="boardName!=null">and board_name=#{boardName}</if>
+            <if test="address!=null">and address=#{address}</if>
+            <if test="version!=null">And version =#{version}</if>
+        </trim>
+    </select>
+
+    <update id="updateCopy" >
+        update  board_copy t
+      <set>
+          <if test="boardName!=null">
+              board_name=#{boardName},
+          </if>
+          <if test="address!=null">
+              address=#{address},
+          </if>
+          <if test="version!=null">
+              version=#{version},
+          </if>
+      </set>
+       <where>
+           <if test="id!=null">
+               id=#{id}
+           </if>
+       </where>
+    </update>
+
+    <update id="updateCopy2" >
+        update board_copy
+      <trim prefix="set" suffixOverrides="," >
+          <if test="boardName!=null">board_name=#{boardName},</if>
+          <if test="version!=null">version=#{version},</if>
+        <if test="address!=null">address=#{address},</if>
+     </trim>
+    <trim prefix="where" prefixOverrides="and">
+        and id=#{id}
+      <if test="version!=null"> and version=#{version}</if>
+    </trim>
+    </update>
+
+
+    <insert id="insertBoardCopy">
+        insert into board_copy (board_name, address, time, version) VALUES
+         <foreach collection="list" item="l" separator=",">
+            (#{l.boardName},#{l.address},now(),#{l.version})
+          </foreach>
+    </insert>
+    <insert id="insertBoardCopy2">
+        insert into board_copy (board_name, address, time, version) VALUES
+        <foreach collection="ls" item="li" separator="," open="(" close=")"><!--对比insertBoardCopy这里会报错，因为这里的（）是最外层的，里面的选项都没有（）分开-->
+            #{li.boardName},#{li.address},now(),#{li.version}
+        </foreach>
+    </insert>
+
+<select id="selectIn" resultType="BoardCopy">
+    select * from board_copy where id in
+    <foreach collection="l"  item="li" open="(" close=")" separator=",">
+         #{li}
+   </foreach>
+</select>
+ <select id="selectAllId" resultType="java.lang.Integer">
+     select id from board
+ </select>
+
+
+<insert id="insertBySelect">
+    insert into board_copy(board_name, address)select board_name,address from board;
+</insert>
+
+
+
 </mapper>

@@ -5,8 +5,7 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 /**
@@ -18,6 +17,9 @@ import lombok.experimental.Accessors;
  * @since 2020-07-13
  */
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Accessors(chain = true)
 @ApiModel(value="Board对象", description="")
@@ -34,6 +36,6 @@ public class Board implements Serializable {
 
     @ApiModelProperty(value = "地址")
     private String address;
-
+    private String version;
 
 }
